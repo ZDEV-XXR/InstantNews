@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1040564684973",
+    "project_id": "zdev-instant-news",
+    "storage_bucket": "zdev-instant-news.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1040564684973:android:6fc96a26d9a52d74a81e24",
+        "android_client_info": {
+          "package_name": "com.zdev.newsapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhR2aIs9xRzQz1Q8egonUeDeQ0EA1Yvm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
