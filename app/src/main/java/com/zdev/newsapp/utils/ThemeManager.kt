@@ -1,4 +1,4 @@
-package com.zdev.newsapp.util
+package com.zdev.newsapp.utils
 
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey

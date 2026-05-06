@@ -1,5 +1,6 @@
 package com.zdev.newsapp
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -24,7 +26,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.zdev.newsapp.ui.auth.AuthViewModel
+import com.zdev.newsapp.utils.NetworkUtils.isInternetAvailable
 
+
+// Testing Mail : zdevapp@protonmail.com PASS : 098765
 @Composable
 fun LoginScreen(
     onLoginSuccess: () -> Unit,
@@ -36,6 +41,33 @@ fun LoginScreen(
 
     val loading by viewModel.isLoading
     val error by viewModel.errorMessage
+
+    val context = LocalContext.current
+
+    // Inside LoginScreen.kt Column
+    if (viewModel.isWaitingForVerification.value) {
+        Card(
+            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    "Verify your Email",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    "We sent a code to your inbox. Please click the link, then try logging in again.",
+                    style = MaterialTheme.typography.bodySmall
+                )
+                Button(
+                    onClick = { viewModel.isWaitingForVerification.value = false },
+                    modifier = Modifier.align(Alignment.End)
+                ) {
+                    Text("Got it")
+                }
+            }
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -61,13 +93,13 @@ fun LoginScreen(
 
             // 2. Title & Subtitle
             Text(
-                text = if (isRegisterMode.value) "Join the Feed" else "Welcome Back",
+                text = if (isRegisterMode.value) "Join the Feed" else "Welcome",
                 style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold),
                 color = MaterialTheme.colorScheme.onBackground
             )
 
             Text(
-                text = if (isRegisterMode.value) "Create an account to save news" else "Login to see your personalized news",
+                text = if (isRegisterMode.value) "Create an account to save news" else "Email : zdevapp@protonmail.com || Pass : 098765",
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color.Gray,
                 textAlign = TextAlign.Center
@@ -122,20 +154,27 @@ fun LoginScreen(
             // 5. Main Action Button
             Button(
                 onClick = {
-                    if (isRegisterMode.value) {
-                        viewModel.registerUser(email.value, password.value, onLoginSuccess)
+                    if (isInternetAvailable(context)) {
+                        if (isRegisterMode.value) {
+                            viewModel.registerUser(email.value, password.value, onLoginSuccess)
+                        } else {
+                            viewModel.loginUser(email.value, password.value, context, onLoginSuccess)
+                        }
                     } else {
-                        viewModel.loginUser(email.value, password.value, onLoginSuccess)
+                        // Show a Toast or update an error state in the ViewModel
+                        Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show()
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                shape = RoundedCornerShape(12.dp),
                 enabled = !loading
             ) {
                 if (loading) {
-                    CircularProgressIndicator(modifier = Modifier.size(24.dp), color = Color.White, strokeWidth = 2.dp)
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        color = Color.White,
+                        strokeWidth = 2.dp)
                 } else {
                     Text(
                         text = if (isRegisterMode.value) "Create Account" else "Sign In",
@@ -146,6 +185,7 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            /*
             // 6. Switch Mode Button
             TextButton(
                 onClick = {
@@ -159,6 +199,7 @@ fun LoginScreen(
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
+            */
         }
     }
 }

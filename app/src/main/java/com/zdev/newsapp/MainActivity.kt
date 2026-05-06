@@ -9,35 +9,31 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.firebase.FirebaseApp
-import com.zdev.newsapp.ui.MainViewModel
-import com.zdev.newsapp.ui.MainViewModelFactory
 import com.zdev.newsapp.ui.auth.MainNewsScreen
 import com.zdev.newsapp.ui.auth.SettingsScreen
+import com.zdev.newsapp.ui.auth.VerificationScreen
 import com.zdev.newsapp.ui.news.DetailScreen
 import com.zdev.newsapp.ui.theme.NewsAppTheme
-import com.zdev.newsapp.util.ThemeManager
+import com.zdev.newsapp.ui.theme.ThemeViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 1. Initialize dependencies
-        val themeManager = ThemeManager(this)
-        val viewModelFactory = MainViewModelFactory(themeManager)
-        val mainViewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
-
         FirebaseApp.initializeApp(this)
 
         setContent {
             // 2. Observe the theme state globally
-            val isDarkMode by mainViewModel.isDarkMode.collectAsState(initial = false)
+            // val isDarkMode by mainViewModel.isDarkMode.collectAsState(initial = false)
+            val themeViewModel: ThemeViewModel = viewModel()
+            val isDarkMode by themeViewModel.isDarkMode.collectAsState()
 
             NewsAppTheme(darkTheme = isDarkMode) {
                 Surface(
@@ -50,11 +46,20 @@ class MainActivity : ComponentActivity() {
                     // In MainActivity.kt
                     NavHost(
                         navController = navController,
-                        startDestination = "login"
+                        startDestination = "main" // login
                     ) {
                         composable("login") {
                             LoginScreen(onLoginSuccess = {
+                                navController.navigate("verification") {
+                                    popUpTo("verification") { inclusive = true }
+                                }
+                            })
+                        }
+
+                        composable("verification") {
+                            VerificationScreen(onVerificationSuccess = {
                                 navController.navigate("main") {
+                                    // Important: Clear the login and verification screens from history
                                     popUpTo("login") { inclusive = true }
                                 }
                             })

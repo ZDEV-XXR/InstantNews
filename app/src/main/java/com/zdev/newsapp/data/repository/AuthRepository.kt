@@ -6,15 +6,29 @@ import kotlinx.coroutines.tasks.await
 
 class AuthRepository(private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()) {
 
-    // Check if a user is already logged in
-    fun getCurrentUser(): FirebaseUser? = firebaseAuth.currentUser
-
     // Login logic
     suspend fun login(email: String, pass: String): Result<FirebaseUser> {
         return try {
             val result = firebaseAuth.signInWithEmailAndPassword(email, pass).await()
             result.user?.let { Result.success(it) }
                 ?: Result.failure(Exception("User not found"))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    // Check if the current user has verified their email
+    fun isEmailVerified(): Boolean {
+        return FirebaseAuth.getInstance().currentUser?.isEmailVerified ?: false
+    }
+
+    // Send the verification link to the user's inbox
+    suspend fun sendVerificationEmail(): Result<Unit> {
+        return try {
+            // We get the current user (which was just created via register)
+            val user = FirebaseAuth.getInstance().currentUser
+            user?.sendEmailVerification()?.await()
+            Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -31,5 +45,7 @@ class AuthRepository(private val firebaseAuth: FirebaseAuth = FirebaseAuth.getIn
         }
     }
 
-    fun logout() = firebaseAuth.signOut()
+    fun logout() {
+        FirebaseAuth.getInstance().signOut()
+    }
 }

@@ -5,12 +5,20 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 
-// API Key: 389756a5ad3147e6a533faae76fb3772
+const val API = "389756a5ad3147e6a533faae76fb3772"
 interface NewsApiService {
     @GET("v2/top-headlines")
     suspend fun getTopHeadlines(
         @Query("country") country: String = "us",
         @Query("category") category: String,
-        @Query("apiKey") apiKey: String = "389756a5ad3147e6a533faae76fb3772"
+        @Query("apiKey") apiKey: String = API,
+        @Query("page") page: Int
+    ): NewsResponse
+
+    @GET("v2/everything")
+    suspend fun searchNews(
+        @Query("q") query: String,
+        @Query("page") page: Int,
+        @Query("apiKey") apiKey: String = "YOUR_KEY"
     ): NewsResponse
 }
