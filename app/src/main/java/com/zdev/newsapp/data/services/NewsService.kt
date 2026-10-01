@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 
-const val API = "389756a5ad3147e6a533faae76fb3772"
+const val API = ""
 interface NewsApiService {
     @GET("v2/top-headlines")
     suspend fun getTopHeadlines(
