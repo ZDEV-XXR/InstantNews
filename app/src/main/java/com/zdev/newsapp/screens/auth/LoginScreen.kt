@@ -29,7 +29,6 @@ import com.zdev.newsapp.screens.auth.AuthViewModel
 import com.zdev.newsapp.utils.NetworkUtils.isInternetAvailable
 
 
-// Testing Mail : zdevapp@protonmail.com PASS : 098765
 @Composable
 fun LoginScreen(
     onLoginSuccess: () -> Unit,
@@ -99,7 +98,7 @@ fun LoginScreen(
             )
 
             Text(
-                text = if (isRegisterMode.value) "Create an account to save news" else "Email : zdevapp@protonmail.com || Pass : 098765",
+                text = if (isRegisterMode.value) "Create an account to save news" else "Sign in with your email and password",
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color.Gray,
                 textAlign = TextAlign.Center

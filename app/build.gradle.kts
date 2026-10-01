@@ -1,4 +1,6 @@
 import org.gradle.kotlin.dsl.support.kotlinCompilerOptions
+import java.util.Properties
+import java.io.FileInputStream
 
 plugins {
     alias(libs.plugins.android.application)
@@ -22,11 +24,30 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // 1. Enable BuildConfig generation
+        buildFeatures {
+            buildConfig = true
+        }
+
+        // 2. Read the local.properties file
+        val localProperties = Properties().apply {
+            val localPropertiesFile = rootProject.file("local.properties")
+            if (localPropertiesFile.exists()) {
+                load(FileInputStream(localPropertiesFile))
+            }
+        }
+
+        // 3. Fallback to System Environment variables if local.properties is missing (useful for CI/CD)
+        val rawApiKey = localProperties.getProperty("NEWS_API") ?: System.getenv("NEWS_API") ?: ""
+        val newsApiKey = rawApiKey.trim().removeSurrounding("\"").removeSurrounding("'")
+
+        // 4. Inject variables into BuildConfig (Type, Name, Value)
+        buildConfigField("String", "NEWS_API", "\"$newsApiKey\"")
     }
 
     buildFeatures {
         compose = true
-
     }
 
 
@@ -58,10 +79,9 @@ dependencies {
     // --- Jetpack Compose ---
     val composeBom = platform("androidx.compose:compose-bom:2024.02.00")
     implementation(composeBom)
-    implementation("androidx.compose.screens:screens")
-    implementation("androidx.compose.material3:material3:1.2.1")
-    implementation("androidx.compose.material3:material3") // We're using M3 for that modern look
-    implementation("androidx.compose.screens:screens-tooling-preview")
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
 

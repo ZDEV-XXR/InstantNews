@@ -1,11 +1,12 @@
 package com.zdev.newsapp.data.services
 
+import com.zdev.newsapp.BuildConfig
 import com.zdev.newsapp.data.model.NewsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+val API = BuildConfig.NEWS_API
 
-const val API = "389756a5ad3147e6a533faae76fb3772"
 interface NewsApiService {
     @GET("v2/top-headlines")
     suspend fun getTopHeadlines(
@@ -19,6 +20,6 @@ interface NewsApiService {
     suspend fun searchNews(
         @Query("q") query: String,
         @Query("page") page: Int,
-        @Query("apiKey") apiKey: String = "YOUR_KEY"
+        @Query("apiKey") apiKey: String = API
     ): NewsResponse
 }
