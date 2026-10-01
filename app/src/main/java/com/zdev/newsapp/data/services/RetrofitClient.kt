@@ -1,4 +1,4 @@
-package com.zdev.newsapp.data.remote
+package com.zdev.newsapp.data.services
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

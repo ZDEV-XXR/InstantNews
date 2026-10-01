@@ -1,4 +1,4 @@
-package com.zdev.newsapp.data.remote
+package com.zdev.newsapp.data.services
 
 import com.zdev.newsapp.data.model.NewsResponse
 import retrofit2.http.GET

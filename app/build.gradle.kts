@@ -58,10 +58,10 @@ dependencies {
     // --- Jetpack Compose ---
     val composeBom = platform("androidx.compose:compose-bom:2024.02.00")
     implementation(composeBom)
-    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.screens:screens")
     implementation("androidx.compose.material3:material3:1.2.1")
     implementation("androidx.compose.material3:material3") // We're using M3 for that modern look
-    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.screens:screens-tooling-preview")
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
 

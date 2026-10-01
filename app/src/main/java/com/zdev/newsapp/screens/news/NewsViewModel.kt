@@ -1,4 +1,4 @@
-package com.zdev.newsapp.ui.news
+package com.zdev.newsapp.screens.news
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf

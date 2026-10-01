@@ -1,4 +1,4 @@
-package com.zdev.newsapp.ui.auth
+package com.zdev.newsapp.screens.auth
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.zdev.newsapp.ui.theme.ThemeViewModel
+import com.zdev.newsapp.styles.theme.ThemeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -16,12 +16,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.firebase.FirebaseApp
-import com.zdev.newsapp.ui.auth.MainNewsScreen
-import com.zdev.newsapp.ui.auth.SettingsScreen
-import com.zdev.newsapp.ui.auth.VerificationScreen
-import com.zdev.newsapp.ui.news.DetailScreen
-import com.zdev.newsapp.ui.theme.NewsAppTheme
-import com.zdev.newsapp.ui.theme.ThemeViewModel
+import com.zdev.newsapp.screens.auth.MainNewsScreen
+import com.zdev.newsapp.screens.auth.SettingsScreen
+import com.zdev.newsapp.screens.auth.VerificationScreen
+import com.zdev.newsapp.screens.news.DetailScreen
+import com.zdev.newsapp.styles.theme.NewsAppTheme
+import com.zdev.newsapp.styles.theme.ThemeViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

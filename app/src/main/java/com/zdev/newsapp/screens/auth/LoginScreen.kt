@@ -25,7 +25,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.zdev.newsapp.ui.auth.AuthViewModel
+import com.zdev.newsapp.screens.auth.AuthViewModel
 import com.zdev.newsapp.utils.NetworkUtils.isInternetAvailable
 
 

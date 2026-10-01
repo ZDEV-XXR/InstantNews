@@ -1,4 +1,4 @@
-package com.zdev.newsapp.ui.main
+package com.zdev.newsapp.screens.main
 
 data class NewsArticle(
     val title: String,

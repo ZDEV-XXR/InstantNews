@@ -1,4 +1,4 @@
-package com.zdev.newsapp.ui.theme
+package com.zdev.newsapp.styles.theme
 
 import android.app.Activity
 import android.app.Application

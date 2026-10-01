@@ -1,4 +1,4 @@
-package com.zdev.newsapp.ui.auth
+package com.zdev.newsapp.screens.auth
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -29,7 +29,7 @@ import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.zdev.newsapp.data.model.Article
-import com.zdev.newsapp.ui.news.NewsViewModel
+import com.zdev.newsapp.screens.news.NewsViewModel
 import kotlinx.coroutines.launch
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets

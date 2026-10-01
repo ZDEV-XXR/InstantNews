@@ -1,7 +1,7 @@
 package com.zdev.newsapp.data.repository
 
 import com.zdev.newsapp.data.model.Article
-import com.zdev.newsapp.data.remote.RetrofitClient
+import com.zdev.newsapp.data.services.RetrofitClient
 import retrofit2.http.GET
 import retrofit2.http.Headers
 
